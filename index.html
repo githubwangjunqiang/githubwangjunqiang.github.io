@@ -543,6 +543,134 @@
         color: rgba(176, 176, 176, 0.92);
       }
 
+      /* 截图展示区样式 */
+      .screenshotsSection {
+        margin-top: 18px;
+      }
+
+      .screenshotsList {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 28px;
+      }
+
+      .screenshotItem {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: center;
+        animation: itemFadeIn 500ms ease both;
+      }
+
+      .screenshotItem:nth-child(1) { animation-delay: 100ms; }
+      .screenshotItem:nth-child(2) { animation-delay: 200ms; }
+      .screenshotItem:nth-child(3) { animation-delay: 300ms; }
+      .screenshotItem:nth-child(4) { animation-delay: 400ms; }
+      .screenshotItem:nth-child(5) { animation-delay: 500ms; }
+
+      .screenshotItemReverse {
+        grid-template-columns: auto 1fr;
+      }
+
+      .screenshotItemReverse .screenshotPhone {
+        order: -1;
+      }
+
+      .screenshotItemReverse .screenshotText {
+        order: 1;
+        text-align: right;
+      }
+
+      .screenshotText h3 {
+        margin: 0 0 8px;
+        font-family: var(--serif);
+        font-size: 18px;
+        font-weight: 600;
+        color: rgba(255, 255, 255, 0.95);
+        letter-spacing: 0.3px;
+      }
+
+      .screenshotText p {
+        margin: 0;
+        font-size: 14px;
+        line-height: 1.65;
+        color: rgba(176, 176, 176, 0.92);
+        max-width: 42ch;
+      }
+
+      .screenshotPhone {
+        animation: phoneRise 600ms ease both;
+      }
+
+      .phoneFrame {
+        position: relative;
+        width: 200px;
+        height: auto;
+        border-radius: 28px;
+        border: 3px solid rgba(255, 255, 255, 0.18);
+        background: linear-gradient(135deg, rgba(40, 55, 65, 0.6), rgba(20, 35, 45, 0.8));
+        padding: 10px;
+        box-shadow:
+          0 20px 50px rgba(0, 0, 0, 0.4),
+          0 0 0 1px rgba(0, 194, 255, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        overflow: hidden;
+        transition: transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 320ms ease;
+      }
+
+      .phoneFrame::before {
+        content: "";
+        position: absolute;
+        top: 12px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 50px;
+        height: 4px;
+        border-radius: 2px;
+        background: rgba(255, 255, 255, 0.15);
+        z-index: 2;
+      }
+
+      .phoneFrame:hover {
+        transform: translateY(-6px) scale(1.04);
+        box-shadow:
+          0 28px 65px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(0, 194, 255, 0.2),
+          0 0 40px rgba(0, 194, 255, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.15);
+      }
+
+      .screenshotImg {
+        width: 100%;
+        height: auto;
+        border-radius: 18px;
+        display: block;
+        object-fit: cover;
+      }
+
+      @keyframes phoneRise {
+        from {
+          transform: translateY(25px) scale(0.92);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+      }
+
+      @keyframes itemFadeIn {
+        from {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
       @keyframes rise {
         from {
           transform: translateY(10px);
@@ -570,6 +698,61 @@
         .sectionInner {
           padding: 18px 16px 16px;
         }
+        .screenshotsList {
+          gap: 20px;
+        }
+        .screenshotItem,
+        .screenshotItemReverse {
+          grid-template-columns: 1fr;
+          gap: 16px;
+        }
+        .screenshotItemReverse .screenshotPhone {
+          order: 0;
+        }
+        .screenshotItemReverse .screenshotText {
+          order: 1;
+          text-align: left;
+        }
+        .screenshotText {
+          text-align: center;
+        }
+        .screenshotText p {
+          max-width: none;
+        }
+        .screenshotPhone {
+          display: flex;
+          justify-content: center;
+        }
+        .phoneFrame {
+          width: 160px;
+          border-radius: 24px;
+          padding: 8px;
+        }
+        .phoneFrame::before {
+          width: 40px;
+          height: 3px;
+          top: 10px;
+        }
+        .screenshotImg {
+          border-radius: 16px;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .phoneFrame {
+          width: 140px;
+          border-radius: 20px;
+          padding: 6px;
+        }
+        .screenshotImg {
+          border-radius: 14px;
+        }
+        .screenshotText h3 {
+          font-size: 16px;
+        }
+        .screenshotText p {
+          font-size: 13px;
+        }
       }
 
       @media (prefers-reduced-motion: reduce) {
@@ -578,6 +761,15 @@
         }
         .link,
         .btn {
+          transition: none !important;
+        }
+        .screenshotPhone {
+          animation: none !important;
+        }
+        .screenshotItem {
+          animation: none !important;
+        }
+        .phoneFrame {
           transition: none !important;
         }
       }
@@ -722,6 +914,70 @@
           </div>
         </section>
 
+        <!-- 截图展示区 -->
+        <section class="heroCard screenshotsSection" aria-label="应用截图">
+          <div class="sectionInner">
+            <h2 class="sectionTitle" data-i18n="screenshots_title">应用预览</h2>
+            <div class="screenshotsList">
+              <div class="screenshotItem">
+                <div class="screenshotText">
+                  <h3 data-i18n="screen1_title">罗盘主界面</h3>
+                  <p data-i18n="screen1_desc">实时响应手机朝向，罗盘指针精准指向东南西北，动态效果流畅自然。</p>
+                </div>
+                <div class="screenshotPhone">
+                  <div class="phoneFrame">
+                    <img src="./assets/screenshot1.png" alt="罗盘壁纸截图1" class="screenshotImg" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+              <div class="screenshotItem screenshotItemReverse">
+                <div class="screenshotText">
+                  <h3 data-i18n="screen2_title">多款主题风格</h3>
+                  <p data-i18n="screen2_desc">内置多款精美主题，满足不同审美需求，一键切换随心选择。</p>
+                </div>
+                <div class="screenshotPhone">
+                  <div class="phoneFrame">
+                    <img src="./assets/screenshot2.png" alt="罗盘壁纸截图2" class="screenshotImg" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+              <div class="screenshotItem">
+                <div class="screenshotText">
+                  <h3 data-i18n="screen3_title">设置中心</h3>
+                  <p data-i18n="screen3_desc">简洁明了的设置界面，轻松调整罗盘灵敏度、主题风格等参数。</p>
+                </div>
+                <div class="screenshotPhone">
+                  <div class="phoneFrame">
+                    <img src="./assets/screenshot3.png" alt="罗盘壁纸截图3" class="screenshotImg" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+              <div class="screenshotItem screenshotItemReverse">
+                <div class="screenshotText">
+                  <h3 data-i18n="screen4_title">GIF 创意工厂</h3>
+                  <p data-i18n="screen4_desc">一键录制动态效果，生成 GIF 动图分享给好友，定格精彩瞬间。</p>
+                </div>
+                <div class="screenshotPhone">
+                  <div class="phoneFrame">
+                    <img src="./assets/screenshot4.png" alt="罗盘壁纸截图4" class="screenshotImg" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+              <div class="screenshotItem">
+                <div class="screenshotText">
+                  <h3 data-i18n="screen5_title">壁纸设置</h3>
+                  <p data-i18n="screen5_desc">一键设置为桌面壁纸或锁屏壁纸，让手机焕然一新。</p>
+                </div>
+                <div class="screenshotPhone">
+                  <div class="phoneFrame">
+                    <img src="./assets/screenshot5.png" alt="罗盘壁纸截图5" class="screenshotImg" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <footer>
           <div class="footerLine">
             <div>
@@ -789,7 +1045,18 @@
             intro_sum_li4: "高清渲染：动画流畅，画质细腻。",
             intro_sum_li5: "极简操作：清爽界面，一键设置，上手即用。",
             intro_cta_title: "抛弃沉闷，拥抱不凡。",
-            intro_cta_desc: "立即下载「罗盘动态壁纸」，让每一次点亮屏幕，都成为一次探索未知的奇妙旅程。"
+            intro_cta_desc: "立即下载「罗盘动态壁纸」，让每一次点亮屏幕，都成为一次探索未知的奇妙旅程。",
+            screenshots_title: "应用预览",
+            screen1_title: "罗盘主界面",
+            screen1_desc: "实时响应手机朝向，罗盘指针精准指向东南西北，动态效果流畅自然。",
+            screen2_title: "多款主题风格",
+            screen2_desc: "内置多款精美主题，满足不同审美需求，一键切换随心选择。",
+            screen3_title: "设置中心",
+            screen3_desc: "简洁明了的设置界面，轻松调整罗盘灵敏度、主题风格等参数。",
+            screen4_title: "GIF 创意工厂",
+            screen4_desc: "一键录制动态效果，生成 GIF 动图分享给好友，定格精彩瞬间。",
+            screen5_title: "壁纸设置",
+            screen5_desc: "一键设置为桌面壁纸或锁屏壁纸，让手机焕然一新。"
           },
           en: {
             app_name: "Compass Wallpaper",
@@ -834,7 +1101,18 @@
             intro_sum_li4: "High-definition rendering with smooth animation.",
             intro_sum_li5: "Simple setup with a clean interface.",
             intro_cta_title: "Leave the ordinary behind.",
-            intro_cta_desc: "Download Compass Live Wallpaper and make every screen-on feel like a small adventure."
+            intro_cta_desc: "Download Compass Live Wallpaper and make every screen-on feel like a small adventure.",
+            screenshots_title: "App Preview",
+            screen1_title: "Compass Main Screen",
+            screen1_desc: "Responds to your phone's orientation in real-time. The compass pointer accurately directs you north, south, east, and west with smooth motion.",
+            screen2_title: "Multiple Themes",
+            screen2_desc: "Built-in beautiful themes to match different tastes. One tap to switch and choose your favorite style.",
+            screen3_title: "Settings Center",
+            screen3_desc: "Clean and intuitive settings panel. Easily adjust compass sensitivity, theme styles, and other parameters.",
+            screen4_title: "GIF Studio",
+            screen4_desc: "Record dynamic effects with one tap. Generate GIF animations to share with friends and capture beautiful moments.",
+            screen5_title: "Wallpaper Setup",
+            screen5_desc: "Set as home screen or lock screen wallpaper with one tap. Give your phone a fresh new look."
           }
         };
 
