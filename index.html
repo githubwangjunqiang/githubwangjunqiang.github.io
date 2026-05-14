@@ -1,15 +1,15 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark" />
     <meta name="theme-color" content="#0A1921" />
 
-    <title>罗盘壁纸 - App 官网</title>
+    <title>灵鱼罗盘壁纸 - 官方网站</title>
     <meta
       name="description"
-      content="罗盘壁纸 App 的官方网站首页。这里提供应用简介与相关条款入口（隐私政策、用户协议）。"
+      content="灵鱼罗盘壁纸 App 的官方网站首页。提供灵鱼成长、动态罗盘与交互壁纸的极致体验。"
     />
 
     <link rel="icon" href="./assets/icon.svg" type="image/svg+xml" />
@@ -356,6 +356,26 @@
         display: grid;
         place-items: center;
         padding: 18px 18px 10px;
+      }
+
+      .posterWrap {
+        width: min(420px, 100%);
+        aspect-ratio: 16 / 9;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .posterImg {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .posterImg:hover {
+        transform: scale(1.05);
       }
 
       #timeCompass {
@@ -782,10 +802,10 @@
     <div class="wrap">
       <header>
         <div class="brand">
-          <img src="./assets/icon.svg" alt="罗盘壁纸 图标" />
+          <img src="./assets/icon.svg" alt="十二生肖罗盘时钟 图标" />
           <div class="name">
-            <strong data-i18n="app_name">罗盘壁纸</strong>
-            <span data-i18n="app_tagline">一个人的小而美 App 首页</span>
+            <strong data-i18n="app_name">灵鱼罗盘壁纸</strong>
+            <span data-i18n="app_tagline">灵鱼动态交互：在桌面开启一段治愈的成长之旅</span>
           </div>
         </div>
 
@@ -803,10 +823,10 @@
       <main>
         <section class="hero" aria-label="首页主视觉">
           <div class="heroCard heroLeft">
-            <div class="kicker"><span class="dot" aria-hidden="true"></span> <span data-i18n="kicker">罗盘灵感 · 桌面壁纸</span></div>
-            <h1 data-i18n="hero_title">让桌面保持方向感</h1>
+            <div class="kicker"><span class="dot" aria-hidden="true"></span> <span data-i18n="kicker">经典导航艺术 · 现代科技融合</span></div>
+            <h1 data-i18n="hero_title">罗盘动态壁纸：定义您的桌面美学</h1>
             <p class="sub">
-              <span data-i18n="hero_sub">这是「罗盘壁纸」App 的官网首页。这里会持续更新应用的基本介绍与重要条款入口。</span>
+              <span data-i18n="hero_sub">一款将经典导航艺术、尖端现代科技与个性化创意完美融合的动态壁纸应用。它不仅仅是壁纸，更是手机上的实时交互艺术品。</span>
             </p>
 
             <div class="ctaRow" role="group" aria-label="条款入口按钮">
@@ -828,32 +848,47 @@
                 <span data-i18n="btn_terms">用户协议</span>
                 <span aria-hidden="true">→</span>
               </a>
+              <a class="btn btnPrimary" href="./fish_interaction_guide.html" target="_blank" rel="noopener noreferrer">
+                <span data-i18n="btn_manual">灵鱼交互指南</span>
+                <span aria-hidden="true">→</span>
+              </a>
             </div>
 
             <div class="grid" aria-label="应用简介">
               <article class="card">
-                <h3 data-i18n="c1_title">简洁设计</h3>
-                <p data-i18n="c1_desc">以罗盘为灵感，强调信息层次与留白，让壁纸更耐看。</p>
+                <h3 data-i18n="c1_title">实时动力</h3>
+                <p data-i18n="c1_desc">罗盘随手机传感器实时灵动旋转，告别枯燥的静态桌面。</p>
               </article>
               <article class="card">
-                <h3 data-i18n="c2_title">专注体验</h3>
-                <p data-i18n="c2_desc">界面轻量克制，尽量把复杂度留在功能里，把清爽留给你。</p>
+                <h3 data-i18n="c2_title">极致丝滑</h3>
+                <p data-i18n="c2_desc">深度优化绘制管线与传感器响应，确保动画如流水般自然顺畅。</p>
               </article>
               <article class="card">
-                <h3 data-i18n="c3_title">持续维护</h3>
-                <p data-i18n="c3_desc">作为个人开发者，我会持续优化稳定性与细节，欢迎反馈建议。</p>
+                <h3 data-i18n="c3_title">低功耗设计</h3>
+                <p data-i18n="c3_desc">算法级优化减少系统负担，轻量级架构，让美感与续航兼得。</p>
               </article>
             </div>
           </div>
 
-          <div class="heroCard heroRight" aria-label="时间罗盘预览">
+          <div class="heroCard heroRight" aria-label="功能预览">
             <div class="previewCard">
               <div class="canvasWrap">
                 <canvas id="timeCompass" aria-label="时间罗盘预览图" role="img"></canvas>
               </div>
               <div class="previewLabel">
-                <div class="title" data-i18n="preview_title">时间罗盘</div>
+                <div class="title" data-i18n="preview_title">实时罗盘预览</div>
                 <div class="hint" id="clockHint">--:--:--</div>
+              </div>
+            </div>
+
+            <!-- 灵鱼壁纸海报 -->
+            <div class="previewCard" style="margin-top: 16px;">
+              <div class="posterWrap">
+                <img src="./assets/fish_poster.svg" alt="灵鱼壁纸海报" class="posterImg" />
+              </div>
+              <div class="previewLabel">
+                <div class="title" data-i18n="fish_poster_title">灵鱼壁纸海报</div>
+                <div class="hint">Live Interaction</div>
               </div>
             </div>
           </div>
@@ -862,54 +897,54 @@
         <section class="heroCard sectionCard" aria-label="应用介绍">
           <div class="sectionInner">
             <h2 class="sectionTitle" data-i18n="intro_title">
-              罗盘动态壁纸：指引方向，捕捉流光，定义你的桌面美学
+              Compass Clock：精密逻辑，指尖流光
             </h2>
             <p class="lead" data-i18n="intro_lead">
-              您是否厌倦了千篇一律的静态壁纸？「罗盘动态壁纸」将古典导航艺术、现代尖端科技与个性化创意完美融合。它不仅仅是一款壁纸，更是您手机里的一件实时交互艺术品。
+              厌倦了平庸的静态背景？「Compass Clock」为您带来全新的视觉维度。通过实时物理传感器反馈，您的主屏幕将变为一个充满活力的精密罗盘系统。
             </p>
 
             <div class="grid2" aria-label="亮点概览">
               <article class="card">
-                <h4 data-i18n="intro_core_title">核心功能：真正的动态交互</h4>
+                <h4 data-i18n="intro_core_title">核心功能：物理驱动的艺术</h4>
                 <p data-i18n="intro_core_desc">
-                  我们利用动态渲染技术，将功能完备、响应灵敏的罗盘实时呈现在主屏幕上。
+                  我们利用动态渲染技术，将高精度的罗盘实时呈现在主屏幕上。
                 </p>
                 <ul class="list">
-                  <li class="li" data-i18n="intro_core_li1">实时指向：罗盘随手机朝向灵动旋转，精准指引东南西北。</li>
-                  <li class="li" data-i18n="intro_core_li2">丝滑体验：传感器优化，动画如流水般顺滑，响应更跟手。</li>
+                  <li class="li" data-i18n="intro_core_li1">高精指向：基于重力与磁感传感器的真实反馈，精准灵动。</li>
+                  <li class="li" data-i18n="intro_core_li2">工业美学：精简的线条与配色，适配各类现代手机界面。</li>
                 </ul>
               </article>
 
               <div class="stack">
                 <article class="card">
-                  <h4 data-i18n="intro_gif_title">重磅更新：GIF 创意工厂</h4>
+                  <h4 data-i18n="intro_gif_title">创作台：灵感转瞬即逝</h4>
                   <p data-i18n="intro_gif_desc">
-                    一键录制并制作成 GIF 动图，保存到相册或分享给好友，让灵感定格在你最喜欢的那一帧。
+                    内置 GIF 创作工具，支持将照片转化为适配屏幕的动态壁纸或有趣的表情包。
                   </p>
                 </article>
                 <article class="card">
-                  <h4 data-i18n="intro_perf_title">轻量、流畅、极度省电</h4>
+                  <h4 data-i18n="intro_perf_title">轻量、稳定、低功耗</h4>
                   <p data-i18n="intro_perf_desc">
-                    针对传感器调用与绘制流程做了优化，尽量减少额外负担，体验轻快稳定。
+                    针对不同硬件环境做了深度兼容性优化，确保在提供美感的同时保持系统轻快。
                   </p>
                 </article>
               </div>
             </div>
 
             <article class="card" style="margin-top: 14px;">
-              <h4 data-i18n="intro_sum_title">主要特性总结</h4>
+              <h4 data-i18n="intro_sum_title">核心特性总结</h4>
               <ul class="list">
-                <li class="li" data-i18n="intro_sum_li1">实时指向：基于物理传感器的真实罗盘反馈。</li>
-                <li class="li" data-i18n="intro_sum_li2">GIF 制作：支持动态效果转 GIF，保存至相册，定义个性桌面。</li>
-                <li class="li" data-i18n="intro_sum_li3">风格多样：内置多款精美主题，满足不同审美。</li>
-                <li class="li" data-i18n="intro_sum_li4">高清渲染：动画流畅，画质细腻。</li>
-                <li class="li" data-i18n="intro_sum_li5">极简操作：清爽界面，一键设置，上手即用。</li>
+                <li class="li" data-i18n="intro_sum_li1">实时交互：真正的动态反馈系统。</li>
+                <li class="li" data-i18n="intro_sum_li2">GIF 创作：支持照片转动态壁纸，定义个性桌面。</li>
+                <li class="li" data-i18n="intro_sum_li3">全球风格：内置多款全球化审美主题，从希腊古典到未来极简。</li>
+                <li class="li" data-i18n="intro_sum_li4">深度定制：支持调整颜色、字体、动画顺时针/逆时针等细节。</li>
+                <li class="li" data-i18n="intro_sum_li5">极简操作：直观的 UI 设计，一键应用，上手即用。</li>
               </ul>
             </article>
 
             <div class="callout" aria-label="结尾文案">
-              <strong data-i18n="intro_cta_title">抛弃沉闷，拥抱不凡。</strong>
-              <span data-i18n="intro_cta_desc">立即下载「罗盘动态壁纸」，让每一次点亮屏幕，都成为一次探索未知的奇妙旅程。</span>
+              <strong data-i18n="intro_cta_title">打破边界，探索非凡。</strong>
+              <span data-i18n="intro_cta_desc">立即下载「Compass Clock」，让每一次点亮屏幕，都成为一次与科技艺术的对话。</span>
             </div>
           </div>
         </section>
@@ -917,60 +952,71 @@
         <!-- 截图展示区 -->
         <section class="heroCard screenshotsSection" aria-label="应用截图">
           <div class="sectionInner">
-            <h2 class="sectionTitle" data-i18n="screenshots_title">应用预览</h2>
+            <h2 class="sectionTitle" data-i18n="screenshots_title">功能预览</h2>
             <div class="screenshotsList">
               <div class="screenshotItem">
                 <div class="screenshotText">
-                  <h3 data-i18n="screen1_title">罗盘主界面</h3>
-                  <p data-i18n="screen1_desc">实时响应手机朝向，罗盘指针精准指向东南西北，动态效果流畅自然。</p>
+                  <h3 data-i18n="screen1_title">实时罗盘界面</h3>
+                  <p data-i18n="screen1_desc">主界面展示实时响应的时间罗盘，设计精美，动画流畅自然。</p>
                 </div>
                 <div class="screenshotPhone">
                   <div class="phoneFrame">
-                    <img src="./assets/screenshot1.png" alt="罗盘壁纸截图1" class="screenshotImg" loading="lazy" />
+                    <img src="./assets/screenshot1.png" alt="Screenshot 1" class="screenshotImg" loading="lazy" />
                   </div>
                 </div>
               </div>
               <div class="screenshotItem screenshotItemReverse">
                 <div class="screenshotText">
-                  <h3 data-i18n="screen2_title">多款主题风格</h3>
-                  <p data-i18n="screen2_desc">内置多款精美主题，满足不同审美需求，一键切换随心选择。</p>
+                  <h3 data-i18n="screen2_title">全球主题库</h3>
+                  <p data-i18n="screen2_desc">内置从古希腊神话到极简现代风格的多样化主题，满足全球用户审美。</p>
                 </div>
                 <div class="screenshotPhone">
                   <div class="phoneFrame">
-                    <img src="./assets/screenshot2.png" alt="罗盘壁纸截图2" class="screenshotImg" loading="lazy" />
+                    <img src="./assets/screenshot2.png" alt="Screenshot 2" class="screenshotImg" loading="lazy" />
                   </div>
                 </div>
               </div>
               <div class="screenshotItem">
                 <div class="screenshotText">
-                  <h3 data-i18n="screen3_title">设置中心</h3>
-                  <p data-i18n="screen3_desc">简洁明了的设置界面，轻松调整罗盘灵敏度、主题风格等参数。</p>
+                  <h3 data-i18n="screen3_title">快捷收藏管理</h3>
+                  <p data-i18n="screen3_desc">轻松管理您喜爱的壁纸配置，一键预览并快速切换。</p>
                 </div>
                 <div class="screenshotPhone">
                   <div class="phoneFrame">
-                    <img src="./assets/screenshot3.png" alt="罗盘壁纸截图3" class="screenshotImg" loading="lazy" />
+                    <img src="./assets/screenshot3.png" alt="Screenshot 3" class="screenshotImg" loading="lazy" />
                   </div>
                 </div>
               </div>
               <div class="screenshotItem screenshotItemReverse">
                 <div class="screenshotText">
-                  <h3 data-i18n="screen4_title">GIF 创意工厂</h3>
-                  <p data-i18n="screen4_desc">一键录制动态效果，生成 GIF 动图分享给好友，定格精彩瞬间。</p>
+                  <h3 data-i18n="screen4_title">GIF 创作中心</h3>
+                  <p data-i18n="screen4_desc">简单直观的 GIF 制作流程，将个人照片转化为独特的动态壁纸。</p>
                 </div>
                 <div class="screenshotPhone">
                   <div class="phoneFrame">
-                    <img src="./assets/screenshot4.png" alt="罗盘壁纸截图4" class="screenshotImg" loading="lazy" />
+                    <img src="./assets/screenshot4.png" alt="Screenshot 4" class="screenshotImg" loading="lazy" />
                   </div>
                 </div>
               </div>
               <div class="screenshotItem">
                 <div class="screenshotText">
-                  <h3 data-i18n="screen5_title">壁纸设置</h3>
-                  <p data-i18n="screen5_desc">一键设置为桌面壁纸或锁屏壁纸，让手机焕然一新。</p>
+                  <h3 data-i18n="screen5_title">深度定制设置</h3>
+                  <p data-i18n="screen5_desc">丰富的自定义选项，支持调整颜色、间距、字体及顺/逆时针旋转。</p>
                 </div>
                 <div class="screenshotPhone">
                   <div class="phoneFrame">
-                    <img src="./assets/screenshot5.png" alt="罗盘壁纸截图5" class="screenshotImg" loading="lazy" />
+                    <img src="./assets/screenshot5.png" alt="Screenshot 5" class="screenshotImg" loading="lazy" />
+                  </div>
+                </div>
+              </div>
+              <div class="screenshotItem screenshotItemReverse">
+                <div class="screenshotText">
+                  <h3 data-i18n="screen6_title">灵鱼互动场景</h3>
+                  <p data-i18n="screen6_desc">全新的互动场景，手指触碰即可投喂，打造您专属的灵动鱼缸。</p>
+                </div>
+                <div class="screenshotPhone">
+                  <div class="phoneFrame">
+                    <img src="./assets/screenshot6.png" alt="Screenshot 6" class="screenshotImg" loading="lazy" />
                   </div>
                 </div>
               </div>
@@ -1003,116 +1049,122 @@
 
         var I18N = {
           "zh-CN": {
-            app_name: "罗盘壁纸",
-            app_tagline: "一个人的小而美 App 首页",
-            kicker: "罗盘灵感 · 桌面壁纸",
-            hero_title: "让桌面保持方向感",
-            hero_sub: "这是「罗盘壁纸」App 的官网首页。这里会持续更新应用的基本介绍与重要条款入口。",
+            app_name: "灵鱼罗盘壁纸",
+            app_tagline: "灵鱼动态交互：在桌面开启一段治愈的成长之旅",
+            kicker: "交互壁纸 · 灵鱼成长 · 传感动力",
+            hero_title: "灵鱼罗盘：定义动态桌面新美学",
+            hero_sub: "一款将灵鱼养成、经典罗盘与现代交互完美融合的动态壁纸应用。实时响应触碰与设备状态，见证灵鱼成长的每一个精彩瞬间。",
             nav_download: "下载",
             nav_privacy: "隐私政策",
             nav_terms: "用户协议",
             btn_download: "Google Play 下载",
             btn_privacy: "隐私政策",
             btn_terms: "用户协议",
+            btn_manual: "交互指南",
             placeholder_hint: "提示：当前为占位链接。请将页面中的",
             and: "和",
             placeholder_hint_tail: "替换为真实链接后再发布。",
-            c1_title: "简洁设计",
-            c1_desc: "以罗盘为灵感，强调信息层次与留白，让壁纸更耐看。",
-            c2_title: "专注体验",
-            c2_desc: "界面轻量克制，尽量把复杂度留在功能里，把清爽留给你。",
-            c3_title: "持续维护",
-            c3_desc: "作为个人开发者，我会持续优化稳定性与细节，欢迎反馈建议。",
-            preview_title: "时间罗盘",
+            c1_title: "动态交互",
+            c1_desc: "手指触碰、投喂互动，灵鱼随心而动，告别枯燥桌面。",
+            c2_title: "灵鱼成长",
+            c2_desc: "独特的成长系统，见证灵鱼从幼体到壮大的演变历程。",
+            c3_title: "低功耗设计",
+            c3_desc: "极致算法优化，在享受流畅交互的同时，确保电量无忧。",
+            preview_title: "实时罗盘预览",
+            fish_poster_title: "灵鱼壁纸海报",
             badge_static: "静态页面",
-            badge_offline: "无需外部资源",
-            footer_rights: "罗盘壁纸. All rights reserved."
-            ,
-            intro_title: "罗盘动态壁纸：指引方向，捕捉流光，定义你的桌面美学",
-            intro_lead: "您是否厌倦了千篇一律的静态壁纸？「罗盘动态壁纸」将古典导航艺术、现代尖端科技与个性化创意完美融合。它不仅仅是一款壁纸，更是您手机里的一件实时交互艺术品。",
-            intro_core_title: "核心功能：真正的动态交互",
-            intro_core_desc: "我们利用动态渲染技术，将功能完备、响应灵敏的罗盘实时呈现在主屏幕上。",
-            intro_core_li1: "实时指向：罗盘随手机朝向灵动旋转，精准指引东南西北。",
-            intro_core_li2: "丝滑体验：传感器优化，动画如流水般顺滑，响应更跟手。",
-            intro_gif_title: "重磅更新：GIF 创意工厂",
-            intro_gif_desc: "一键录制并制作成 GIF 动图，保存到相册或分享给好友，让灵感定格在你最喜欢的那一帧。",
-            intro_perf_title: "轻量、流畅、极度省电",
-            intro_perf_desc: "针对传感器调用与绘制流程做了优化，尽量减少额外负担，体验轻快稳定。",
-            intro_sum_title: "主要特性总结",
-            intro_sum_li1: "实时指向：基于物理传感器的真实罗盘反馈。",
-            intro_sum_li2: "GIF 制作：支持动态效果转 GIF，保存至相册，定义个性桌面。",
-            intro_sum_li3: "风格多样：内置多款精美主题，满足不同审美。",
-            intro_sum_li4: "高清渲染：动画流畅，画质细腻。",
-            intro_sum_li5: "极简操作：清爽界面，一键设置，上手即用。",
-            intro_cta_title: "抛弃沉闷，拥抱不凡。",
-            intro_cta_desc: "立即下载「罗盘动态壁纸」，让每一次点亮屏幕，都成为一次探索未知的奇妙旅程。",
-            screenshots_title: "应用预览",
-            screen1_title: "罗盘主界面",
-            screen1_desc: "实时响应手机朝向，罗盘指针精准指向东南西北，动态效果流畅自然。",
-            screen2_title: "多款主题风格",
-            screen2_desc: "内置多款精美主题，满足不同审美需求，一键切换随心选择。",
-            screen3_title: "设置中心",
-            screen3_desc: "简洁明了的设置界面，轻松调整罗盘灵敏度、主题风格等参数。",
-            screen4_title: "GIF 创意工厂",
-            screen4_desc: "一键录制动态效果，生成 GIF 动图分享给好友，定格精彩瞬间。",
-            screen5_title: "壁纸设置",
-            screen5_desc: "一键设置为桌面壁纸或锁屏壁纸，让手机焕然一新。"
+            badge_offline: "本地资源",
+            footer_rights: "灵鱼罗盘. All rights reserved.",
+            intro_title: "灵鱼戏水，指尖流光",
+            intro_lead: "厌倦了平庸的静态背景？「灵鱼罗盘」为您带来全新的互动维度。通过实时物理传感器反馈与触碰交互，您的主屏幕将变为一个充满活力的数字鱼缸。",
+            intro_core_title: "核心功能：活生生的桌面艺术",
+            intro_core_desc: "我们利用动态渲染技术，将高度智能的灵鱼与精密罗盘实时呈现在主屏幕上。",
+            intro_core_li1: "真实成长：内置成长体系，您的每一份关爱都能促使灵鱼壮大。",
+            intro_core_li2: "灵动交互：支持投喂、触碰反应，灵鱼会因您的动作而产生丰富的反馈。",
+            intro_gif_title: "创作台：定格治愈瞬间",
+            intro_gif_desc: "内置 GIF 创作工具，支持捕捉灵鱼游动的动态画面，定义专属表情包。",
+            intro_perf_title: "轻便、稳定、丝滑",
+            intro_perf_desc: "针对不同硬件环境做了深度兼容性优化，确保在提供美感的同时保持系统轻快。",
+            intro_sum_title: "核心特性总结",
+            intro_sum_li1: "动态交互：真正的实时反馈与养成系统。",
+            intro_sum_li2: "灵鱼成长：见证数字生命的演化之旅。",
+            intro_sum_li3: "全球风格：内置多款审美主题，从唯美和风到未来科技。",
+            intro_sum_li4: "深度定制：支持调整颜色、字体、罗盘转速等细节。",
+            intro_sum_li5: "极简操作：直观的 UI 设计，一键开启您的灵鱼世界。",
+            intro_cta_title: "开启治愈之旅，探索非凡。",
+            intro_cta_desc: "立即下载「灵鱼罗盘」，让每一次点亮屏幕，都成为一次与灵鱼的心灵互动。",
+            screenshots_title: "功能预览",
+            screen1_title: "实时罗盘界面",
+            screen1_desc: "主界面展示实时响应的时间罗盘，设计精美，动画流畅自然。",
+            screen2_title: "全球主题库",
+            screen2_desc: "内置从古希腊神话到极简现代风格的多样化主题，满足全球用户审美。",
+            screen3_title: "快捷收藏管理",
+            screen3_desc: "轻松管理您喜爱的壁纸配置，一键预览并快速切换。",
+            screen4_title: "GIF 创作中心",
+            screen4_desc: "简单直观的 GIF 制作流程，将个人照片转化为独特的动态壁纸。",
+            screen5_title: "深度定制设置",
+            screen5_desc: "丰富的自定义选项，支持调整颜色、间距、字体及顺/逆时针旋转。",
+            screen6_title: "灵鱼互动场景",
+            screen6_desc: "全新的互动场景，手指触碰即可投喂，打造您专属的灵动鱼缸。"
           },
           en: {
-            app_name: "Compass Wallpaper",
-            app_tagline: "A small, handcrafted app homepage",
-            kicker: "Compass-inspired · Wallpapers",
-            hero_title: "Keep Your Home Screen Oriented",
-            hero_sub: "This is the official homepage of Compass Wallpaper. You can find basic info and the latest policy links here.",
+            app_name: "Spirit Fish Compass",
+            app_tagline: "Live Interaction: A Healing Journey on Your Desktop",
+            kicker: "Interactive Wallpaper · Fish Growth · Sensor-Driven",
+            hero_title: "Spirit Fish: Redefining Desktop Aesthetics",
+            hero_sub: "A live wallpaper app blending fish growth, classic compass, and modern interaction. Witness every moment of your spirit fish's growth in real-time.",
             nav_download: "Download",
             nav_privacy: "Privacy Policy",
             nav_terms: "Terms of Service",
             btn_download: "Get it on Google Play",
             btn_privacy: "Privacy Policy",
             btn_terms: "Terms of Service",
+            btn_manual: "Interaction Guide",
             placeholder_hint: "Note: links are placeholders. Please replace",
             and: "and",
             placeholder_hint_tail: "with real URLs before publishing.",
-            c1_title: "Clean Design",
-            c1_desc: "Compass-inspired visuals with clear hierarchy and generous whitespace.",
-            c2_title: "Focused Experience",
-            c2_desc: "Lightweight, restrained UI that keeps the experience calm and clear.",
-            c3_title: "Actively Maintained",
-            c3_desc: "Built by an indie developer. Stability and details will keep improving.",
-            preview_title: "Time Compass",
+            c1_title: "Dynamic Interaction",
+            c1_desc: "Touch and feed to interact with your fish. A lively desktop experience.",
+            c2_title: "Fish Growth",
+            c2_desc: "Unique growth system. Watch your fish evolve from juvenile to majestic.",
+            c3_title: "Power Efficient",
+            c3_desc: "Optimized algorithms for smooth interaction without battery drain.",
+            preview_title: "Live Compass Preview",
+            fish_poster_title: "Spirit Fish Poster",
             badge_static: "Static Page",
-            badge_offline: "No External Assets",
-            footer_rights: "Compass Wallpaper. All rights reserved."
-            ,
-            intro_title: "Compass Live Wallpaper: Find Your Direction, Capture the Glow, Define Your Home Screen Aesthetic",
-            intro_lead: "Tired of the same static wallpapers? Compass Live Wallpaper blends classic navigation art, modern tech, and personal creativity. It is more than a wallpaper, it is an interactive piece of live art on your phone.",
-            intro_core_title: "Core Feature: Truly Interactive Motion",
-            intro_core_desc: "With real-time rendering, a responsive, full-feature compass lives right on your home screen.",
-            intro_core_li1: "Real Direction: the compass rotates with your device orientation and points to the cardinal directions.",
-            intro_core_li2: "Smooth Feel: optimized sensor processing keeps motion fluid and responsive.",
-            intro_gif_title: "New: GIF Studio",
-            intro_gif_desc: "Record the animated compass and export it as a GIF. Save to Photos or share, and keep your favorite moment forever.",
-            intro_perf_title: "Lightweight, Fast, Battery-Friendly",
-            intro_perf_desc: "We optimize sensor usage and the drawing pipeline to keep overhead low and the experience stable.",
-            intro_sum_title: "Highlights",
-            intro_sum_li1: "Real-time direction based on device sensors.",
-            intro_sum_li2: "GIF export: turn motion into a GIF and save it to your album.",
-            intro_sum_li3: "Multiple styles to match different tastes.",
-            intro_sum_li4: "High-definition rendering with smooth animation.",
-            intro_sum_li5: "Simple setup with a clean interface.",
-            intro_cta_title: "Leave the ordinary behind.",
-            intro_cta_desc: "Download Compass Live Wallpaper and make every screen-on feel like a small adventure.",
-            screenshots_title: "App Preview",
-            screen1_title: "Compass Main Screen",
-            screen1_desc: "Responds to your phone's orientation in real-time. The compass pointer accurately directs you north, south, east, and west with smooth motion.",
-            screen2_title: "Multiple Themes",
-            screen2_desc: "Built-in beautiful themes to match different tastes. One tap to switch and choose your favorite style.",
-            screen3_title: "Settings Center",
-            screen3_desc: "Clean and intuitive settings panel. Easily adjust compass sensitivity, theme styles, and other parameters.",
-            screen4_title: "GIF Studio",
-            screen4_desc: "Record dynamic effects with one tap. Generate GIF animations to share with friends and capture beautiful moments.",
-            screen5_title: "Wallpaper Setup",
-            screen5_desc: "Set as home screen or lock screen wallpaper with one tap. Give your phone a fresh new look."
+            badge_offline: "Local Assets",
+            footer_rights: "Spirit Fish Compass. All rights reserved.",
+            intro_title: "Dancing Fish, Flowing Light",
+            intro_lead: "Tired of mundane backgrounds? 「Spirit Fish」 brings a new interactive dimension. Your home screen becomes a vibrant digital aquarium.",
+            intro_core_title: "Core Feature: Living Art",
+            intro_core_desc: "Highly intelligent fish and precision compass on your home screen.",
+            intro_core_li1: "Real Growth: Built-in system where care promotes growth.",
+            intro_core_li2: "Fluid Interaction: Feed and touch for rich behavioral feedback.",
+            intro_gif_title: "Studio: Capture the Moment",
+            intro_gif_desc: "Built-in GIF tool to capture the beauty of your swimming fish.",
+            intro_perf_title: "Lightweight, Stable",
+            intro_perf_desc: "Deep compatibility optimization for various hardware environments.",
+            intro_sum_title: "Key Features",
+            intro_sum_li1: "Live Interaction: True feedback and growth system.",
+            intro_sum_li2: "Fish Growth: Witness the evolution of digital life.",
+            intro_sum_li3: "Global Style: Themes from elegant Japanese to futuristic tech.",
+            intro_sum_li4: "Deep Customization: Adjust colors, fonts, and compass speed.",
+            intro_sum_li5: "Simple Operation: Intuitive UI to start your healing journey.",
+            intro_cta_title: "Start your healing journey.",
+            intro_cta_desc: "Download 「Spirit Fish Compass」 now and interact with your digital pet.",
+            screenshots_title: "Features Preview",
+            screen1_title: "Live Compass Interface",
+            screen1_desc: "Main screen featuring an interactive time compass with smooth motion.",
+            screen2_title: "Global Theme Library",
+            screen2_desc: "Diverse themes to suit global tastes.",
+            screen3_title: "Collection Management",
+            screen3_desc: "Manage your favorite setups with ease.",
+            screen4_title: "GIF Creation Studio",
+            screen4_desc: "A simple workflow to turn photos into live wallpapers.",
+            screen5_title: "Deep Settings",
+            screen5_desc: "Rich customization for colors, fonts, and rotation.",
+            screen6_title: "Interactive Fish Scene",
+            screen6_desc: "New interactive scenes. Tap to feed and enjoy your aquarium."
           }
         };
 
@@ -1122,8 +1174,7 @@
           if (q && (q === "en" || q === "zh-CN")) return q;
           var saved = localStorage.getItem("lang");
           if (saved && (saved === "en" || saved === "zh-CN")) return saved;
-          var nav = (navigator.language || "").toLowerCase();
-          return nav.indexOf("zh") === 0 ? "zh-CN" : "en";
+          return "en";
         }
 
         function applyLang(lang) {
@@ -1143,7 +1194,7 @@
           if (enBtn) enBtn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
 
           var dict = I18N[lang] || I18N["zh-CN"];
-          document.title = (dict.app_name || "罗盘壁纸") + " - App 官网";
+          document.title = (dict.app_name || "Compass Clock") + " - Official Website";
           var nodes = document.querySelectorAll("[data-i18n]");
           for (var i = 0; i < nodes.length; i++) {
             var k = nodes[i].getAttribute("data-i18n");
@@ -1162,7 +1213,7 @@
         if (en) en.addEventListener("click", function () { applyLang("en"); });
 
           // --- 时间罗盘（尽量对齐 App 的 CompassDrawer 视觉逻辑） ---
-          var compassLang = "zh-CN";
+          var compassLang = "en";
           var canvas = document.getElementById("timeCompass");
           var ctx = canvas ? canvas.getContext("2d") : null;
           var raf = 0;
@@ -1310,30 +1361,44 @@
             hint.textContent = hh + ":" + mm + ":" + ss;
           }
 
-          // 计算字体大小与半径（参考 App 的 weight 思路，做简化版）
+          // 准备数据
+          var ringItemsList = [
+            { items: ringItems.months, val: month },
+            { items: ringItems.days, val: day },
+            { items: ringItems.hours, val: hour },
+            { items: ringItems.minutes, val: minute },
+            { items: ringItems.seconds, val: second }
+          ];
+
+          // 计算字体大小与半径（确保总半径不超过安全区域）
+          var safetyMargin = 55; // 进一步增大安全边距，为长中文预留空间
+          var availableRadius = minDim / 2 - safetyMargin;
+          
           var paddingScale = 0.4;
-          var maxRadius = minDim / 2 - 16;
-          var testSize = Math.max(12, Math.round(minDim / 6));
           var fontFamily = "serif";
+          var testSize = 20;
           var fontTest = String(testSize) + "px " + fontFamily;
 
-          var monthWeight = measureMaxWidth(ringItems.months, fontTest) / testSize;
-          var dayWeight = measureMaxWidth(ringItems.days, fontTest) / testSize;
-          var hourWeight = measureMaxWidth(ringItems.hours, fontTest) / testSize;
-          var minuteWeight = measureMaxWidth(ringItems.minutes, fontTest) / testSize;
-          var secondWeight = measureMaxWidth(ringItems.seconds, fontTest) / testSize;
-
-          var totalWeight = monthWeight + dayWeight + hourWeight + minuteWeight + secondWeight + (4 * paddingScale);
-          var bestFont = maxRadius / totalWeight;
-          bestFont = Math.max(12, Math.min(34, bestFont));
+          // 计算各环权重（字符宽度）
+          var weights = ringItemsList.map(function(ring) {
+            return measureMaxWidth(ring.items, fontTest) / testSize;
+          });
+          
+          var ringsWeight = 0;
+          for(var i=0; i<weights.length; i++) ringsWeight += weights[i];
+          var totalPaddingWeight = (weights.length - 1) * paddingScale;
+          
+          // 起始半径占可用半径的 15%
+          var startRadius = availableRadius * 0.15;
+          var remainingRadius = availableRadius - startRadius;
+          
+          // 根据剩余空间计算字号，并添加严格上限
+          var bestFont = remainingRadius / (ringsWeight + totalPaddingWeight);
+          bestFont = Math.max(8, Math.min(22, bestFont)); 
 
           var highlightSize = bestFont;
           var normalSize = bestFont * 0.85;
           var actualPadding = bestFont * paddingScale;
-          var startRadiusScale = 0.12;
-          var safeStartRadius = Math.max(bestFont * (paddingScale + (bestFont * 12) / (2 * Math.PI * 0.8)), bestFont * (paddingScale + maxRadius * startRadiusScale * 0.02));
-          var startRadius = (bestFont * paddingScale) + (maxRadius * startRadiusScale) + safeStartRadius * 0.08;
-          startRadius = Math.min(startRadius, maxRadius * 0.28);
 
           var fontNormal = "600 " + String(Math.round(normalSize)) + "px " + fontFamily;
           var fontHighlight = "700 " + String(Math.round(highlightSize)) + "px " + fontFamily;
@@ -1344,7 +1409,7 @@
           ctx.lineWidth = Math.max(2, bestFont / 8);
           ctx.beginPath();
           ctx.moveTo(cx, cy);
-          ctx.lineTo(cx + maxRadius + 8, cy);
+          ctx.lineTo(cx + availableRadius + 10, cy);
           ctx.stroke();
           ctx.fillStyle = "#ff0000";
           ctx.beginPath();
@@ -1352,17 +1417,12 @@
           ctx.fill();
           ctx.restore();
 
-          // 5 圈：月/日/时/分/秒（与 App 顺序一致）
-          var r = startRadius;
-          drawRing(cx, cy, r, ringItems.months, month, false, fontNormal, fontHighlight);
-          r += (monthWeight * bestFont) + actualPadding;
-          drawRing(cx, cy, r, ringItems.days, day, false, fontNormal, fontHighlight);
-          r += (dayWeight * bestFont) + actualPadding;
-          drawRing(cx, cy, r, ringItems.hours, hour, false, fontNormal, fontHighlight);
-          r += (hourWeight * bestFont) + actualPadding;
-          drawRing(cx, cy, r, ringItems.minutes, minute, false, fontNormal, fontHighlight);
-          r += (minuteWeight * bestFont) + actualPadding;
-          drawRing(cx, cy, r, ringItems.seconds, second, false, fontNormal, fontHighlight);
+          // 绘制 5 圈：月/日/时/分/秒
+          var currentR = startRadius;
+          for (var j = 0; j < ringItemsList.length; j++) {
+            drawRing(cx, cy, currentR, ringItemsList[j].items, ringItemsList[j].val, false, fontNormal, fontHighlight);
+            currentR += (weights[j] * bestFont) + actualPadding;
+          }
         }
 
         function tick() {
@@ -1382,3 +1442,4 @@
     </script>
   </body>
 </html>
+l>

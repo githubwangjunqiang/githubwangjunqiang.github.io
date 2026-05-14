@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0A1921">
+    <title>灵鱼交互指南 - Compass Clock</title>
+    <link rel="icon" href="./assets/icon.svg" type="image/svg+xml">
+    <style>
+        :root {
+            --bg0: #0a1921;
+            --bg1: #07131a;
+            --card0: #1a2a33;
+            --ink: rgba(255, 255, 255, 0.98);
+            --muted: rgba(176, 176, 176, 0.92);
+            --faint: rgba(255, 255, 255, 0.10);
+            --line: rgba(255, 255, 255, 0.14);
+            --card: rgba(26, 42, 51, 0.78);
+            --shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+            --radius: 22px;
+            --accent: #00c2ff;
+            --sans: ui-sans-serif, system-ui, -apple-system, "SF Pro Display", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+            --serif: ui-serif, "Iowan Old Style", "Palatino Linotype", Palatino, "Songti SC", "STSong", serif;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            color: var(--ink);
+            font-family: var(--sans);
+            background: 
+                radial-gradient(900px 650px at 20% 18%, rgba(0, 194, 255, 0.14), transparent 62%),
+                linear-gradient(180deg, var(--bg0), var(--bg1));
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.02) 0px, rgba(255, 255, 255, 0.02) 1px, transparent 1px, transparent 14px);
+            opacity: 0.55;
+            mix-blend-mode: soft-light;
+            z-index: -1;
+        }
+
+        .wrap {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px 18px 80px;
+        }
+
+        header {
+            margin-bottom: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .back-home {
+            font-size: 13px;
+            color: var(--accent);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 999px;
+            border: 1px solid rgba(0, 194, 255, 0.3);
+            background: rgba(0, 194, 255, 0.05);
+            transition: all 0.2s ease;
+        }
+
+        .back-home:hover {
+            background: rgba(0, 194, 255, 0.15);
+            transform: translateX(-4px);
+        }
+
+        /* 语言切换样式 (同步首页) */
+        .segmented {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(26, 42, 51, 0.55);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+        }
+
+        .segBtn {
+            appearance: none;
+            border: 0;
+            background: transparent;
+            color: rgba(255, 255, 255, 0.74);
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            line-height: 1;
+            cursor: pointer;
+            transition: all 160ms ease;
+        }
+
+        .segBtn[aria-pressed="true"] {
+            background: rgba(0, 194, 255, 0.18);
+            border: 1px solid rgba(0, 194, 255, 0.38);
+            color: rgba(255, 255, 255, 0.96);
+        }
+
+        h1 {
+            font-family: var(--serif);
+            font-size: clamp(28px, 5vw, 42px);
+            margin: 0 0 10px;
+            background: linear-gradient(to bottom, #fff, var(--muted));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .quote {
+            border-left: 4px solid var(--accent);
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 0 12px 12px 0;
+            margin: 20px 0 40px;
+            color: var(--muted);
+            font-size: 15px;
+        }
+
+        section {
+            margin-top: 40px;
+            animation: fadeIn 0.6s ease both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .heroCard {
+            border-radius: var(--radius);
+            background: var(--card);
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-family: var(--serif);
+            font-size: 24px;
+            color: var(--accent);
+            margin: 0 0 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h2::before {
+            content: "";
+            width: 4px;
+            height: 20px;
+            background: var(--accent);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 18px;
+            margin: 25px 0 12px;
+            color: rgba(255,255,255,0.9);
+        }
+
+        p {
+            color: var(--muted);
+            margin: 12px 0;
+            font-size: 15px;
+        }
+
+        ul, ol {
+            padding-left: 20px;
+            margin: 12px 0;
+            color: var(--muted);
+        }
+
+        li {
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 14px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--line);
+        }
+
+        th {
+            background: rgba(0, 194, 255, 0.1);
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .config-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 20px;
+            transition: transform 0.2s ease;
+        }
+
+        .config-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .config-card h4 {
+            margin: 0 0 10px;
+            color: var(--accent);
+        }
+
+        .tip {
+            background: linear-gradient(135deg, rgba(0, 194, 255, 0.1), transparent);
+            border: 1px solid rgba(0, 194, 255, 0.2);
+            padding: 15px 20px;
+            border-radius: 14px;
+            margin-top: 15px;
+        }
+
+        .tip strong { color: var(--accent); }
+
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 1px solid var(--line);
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 600px) {
+            .wrap { padding: 20px 15px; }
+            .heroCard { padding: 20px; }
+            table { font-size: 13px; }
+            th, td { padding: 10px; }
+            header { flex-direction: column; align-items: flex-start; }
+            .segmented { align-self: flex-end; margin-top: -38px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="wrap">
+        <header>
+            <a href="index.html" class="back-home" data-i18n="back_home">← 返回首页</a>
+            <span class="segmented" aria-label="Language switch">
+                <button class="segBtn" id="langZh" type="button">中文</button>
+                <button class="segBtn" id="langEn" type="button">EN</button>
+            </span>
+        </header>
+
+        <main>
+            <h1 data-i18n="guide_title">灵鱼壁纸成长秘籍</h1>
+            <div class="quote" data-i18n="guide_quote">
+                这是一份面向用户的「灵鱼壁纸玩法配置说明」，用于帮助用户快速理解灵鱼壁纸可以怎么玩、怎么配、怎么生效。
+            </div>
+
+            <section class="heroCard">
+                <h2 data-i18n="s1_h2">一、灵鱼壁纸是什么</h2>
+                <p data-i18n="s1_p1">灵鱼壁纸不是一张固定不变的壁纸，而是一个可以自己搭配风格的动态鱼缸桌面。</p>
+                <p data-i18n="s1_p2">你可以把它理解成一个“可配置的灵动鱼缸”：</p>
+                <ul>
+                    <li data-i18n="s1_li1">先选一个喜欢的场景氛围</li>
+                    <li data-i18n="s1_li2">再调整灵鱼数量和活跃程度</li>
+                    <li data-i18n="s1_li3">还能替换不同鱼种、投喂鱼食、调整高级参数</li>
+                    <li data-i18n="s1_li4">最后把喜欢的组合保存并应用到桌面</li>
+                </ul>
+                <p data-i18n="s1_p3">也就是说，灵鱼壁纸的核心玩法不是“看一张图”，而是“搭一套属于自己的水族箱风格”。</p>
+            </section>
+
+            <section class="heroCard">
+                <h2 data-i18n="s2_h2">二、灵鱼壁纸可以配置什么</h2>
+                <div style="overflow-x: auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th data-i18n="t_h1">配置项</th>
+                                <th data-i18n="t_h2">作用</th>
+                                <th data-i18n="t_h3">适合什么时候调</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-i18n="tr1_td1">场景</td>
+                                <td data-i18n="tr1_td2">决定整体氛围和背景风格</td>
+                                <td data-i18n="tr1_td3">想换感觉时优先调</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="tr2_td1">鱼群活跃度</td>
+                                <td data-i18n="tr2_td2">决定鱼游动的快慢和灵动感</td>
+                                <td data-i18n="tr2_td3">想要更安静或更热闹时调</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="tr3_td1">鱼槽</td>
+                                <td data-i18n="tr3_td2">决定每个鱼位是否启用、用哪种鱼</td>
+                                <td data-i18n="tr3_td3">想换鱼、减鱼、补鱼时调</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="tr4_td1">鱼食</td>
+                                <td data-i18n="tr4_td2">决定鱼食数量和存在时间</td>
+                                <td data-i18n="tr4_td3">想让画面更有互动感时调</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="tr5_td1">时间显示</td>
+                                <td data-i18n="tr5_td2">控制桌面是否显示时间</td>
+                                <td data-i18n="tr5_td3">想要更实用或更清爽时调</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="tr6_td1">水波效果</td>
+                                <td data-i18n="tr6_td2">控制水面波纹表现</td>
+                                <td data-i18n="tr6_td3">想让画面更自然时调</td>
+                            </tr>
+                            <tr>
+                                <td data-i18n="tr7_td1">高级参数</td>
+                                <td data-i18n="tr7_td2">影响鱼的转向、停顿、群体密度等细节</td>
+                                <td data-i18n="tr7_td3">想做更细腻的个性化时调</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="heroCard">
+                <h2 data-i18n="s3_h2">三、场景怎么选</h2>
+                <p data-i18n="s3_p1">当前灵鱼壁纸提供三种典型场景，每一种都有不同的观感：</p>
+                
+                <h3 data-i18n="s3_h3_1">1. 清澈蓝海</h3>
+                <ul>
+                    <li data-i18n="s3_li1_1">画面更冷静、通透</li>
+                    <li data-i18n="s3_li1_2">适合长时间观看</li>
+                    <li data-i18n="s3_li1_3">适合喜欢简洁、清爽风格的用户</li>
+                </ul>
+
+                <h3 data-i18n="s3_h3_2">2. 暮色海湾</h3>
+                <ul>
+                    <li data-i18n="s3_li2_1">带一点晚霞暖色</li>
+                    <li data-i18n="s3_li2_2">整体更柔和</li>
+                    <li data-i18n="s3_li2_3">适合想要温柔氛围的人</li>
+                </ul>
+
+                <h3 data-i18n="s3_h3_3">3. 梦幻荧光</h3>
+                <ul>
+                    <li data-i18n="s3_li3_1">偏霓虹和荧光感</li>
+                    <li data-i18n="s3_li3_2">夜色气氛更强</li>
+                    <li data-i18n="s3_li3_3">适合喜欢更有视觉冲击力的用户</li>
+                </ul>
+
+                <div class="tip">
+                    <strong data-i18n="tip_title">建议：</strong>
+                    <ul>
+                        <li data-i18n="s3_tip1">白天、办公场景：优先选「清澈蓝海」</li>
+                        <li data-i18n="s3_tip2">想要温柔一点：选「暮色海湾」</li>
+                        <li data-i18n="s3_tip3">想要更炫、更灵动：选「梦幻荧光」</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="heroCard">
+                <h2 data-i18n="s4_h2">四、灵鱼数量和鱼槽是什么</h2>
+                <p data-i18n="s4_p1">灵鱼壁纸里不是简单地“放几条鱼”，而是通过<strong>鱼槽</strong>来管理鱼的组合。</p>
+                
+                <h3 data-i18n="s4_h3_1">什么是鱼槽</h3>
+                <p data-i18n="s4_p2">鱼槽可以理解为“鱼的位置”。每个鱼槽都可以开启或关闭、指定一种鱼种。</p>
+
+                <h3 data-i18n="s4_h3_2">为什么要用鱼槽</h3>
+                <ul>
+                    <li data-i18n="s4_li1">便于控制鱼的数量</li>
+                    <li data-i18n="s4_li2">便于快速替换鱼种</li>
+                    <li data-i18n="s4_li3">便于保存一套稳定的配置</li>
+                </ul>
+
+                <div class="tip">
+                    <strong data-i18n="tip_title">建议：</strong>
+                    <ul>
+                        <li data-i18n="s4_tip1">想要轻松自然：少量鱼槽即可</li>
+                        <li data-i18n="s4_tip2">想要热闹丰富：可以开启更多鱼槽</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="heroCard">
+                <h2 data-i18n="s5_h2">五、鱼食玩法是什么</h2>
+                <p data-i18n="s5_p1">鱼食是灵鱼壁纸里很重要的“互动感来源”。它主要影响：</p>
+                <ul>
+                    <li data-i18n="s5_li1"><strong>鱼食数量</strong>：画面里同时出现多少鱼食</li>
+                    <li data-i18n="s5_li2"><strong>鱼食存活时间</strong>：鱼食能在画面中停留多久</li>
+                </ul>
+                <div class="tip">
+                    <strong data-i18n="tip_title">建议：</strong>
+                    <p data-i18n="s5_tip_p">想要更耐看：保持默认鱼食参数；想要更有趣：适度增加鱼食存在感；想要更省电、更安静：减少鱼食数量和存活时间。</p>
+                </div>
+            </section>
+
+            <section class="heroCard">
+                <h2 data-i18n="s6_h2">六、鱼群活跃度怎么理解</h2>
+                <p data-i18n="s6_p1">决定灵鱼整体是“安静游动”还是“积极追食”。</p>
+                <ul>
+                    <li data-i18n="s6_li1"><strong>低活跃</strong>：游动更平缓，更省电，适合长时间观看。</li>
+                    <li data-i18n="s6_li2"><strong>中活跃</strong>：速度和观感更均衡，推荐默认模式。</li>
+                    <li data-i18n="s6_li3"><strong>高活跃</strong>：追食更积极，画面更有生命力和动态感。</li>
+                </ul>
+            </section>
+
+            <section class="heroCard">
+                <h2 data-i18n="s7_h2">七、时间显示和水波效果</h2>
+                <p data-i18n="s7_p1"><strong>时间显示</strong>：让壁纸兼具美观与实用，适合喜欢“好看+实用”的用户。</p>
+                <p data-i18n="s7_p2"><strong>水波效果</strong>：增加画面流动感和真实感，适合追求沉浸体验的用户。</p>
+            </section>
+
+            <section class="heroCard">
+                <h2 data-i18n="s8_h2">八、高级参数是做什么的</h2>
+                <p data-i18n="s8_p1">高级参数更像“微调旋钮”，影响鱼转向的柔和度、停顿概率、聚集程度等。新手建议先从基础设置开始体验，找到喜欢的风格后再进行微调。</p>
+            </section>
+
+            <section class="heroCard">
+                <h2 data-i18n="s9_h2">九、正确的使用流程</h2>
+                <ol>
+                    <li data-i18n="s9_li1"><strong>先看详情页预览</strong>：确认当前壁纸样式。</li>
+                    <li data-i18n="s9_li2"><strong>再进入设置页调整</strong>：修改场景、鱼槽、活跃度等。</li>
+                    <li data-i18n="s9_li3"><strong>保存配置</strong>：保存后内容才会正式锁定。</li>
+                    <li data-i18n="s9_li4"><strong>应用到桌面</strong>：应用后桌面才会同步更新。</li>
+                </ol>
+            </section>
+
+            <section class="heroCard">
+                <h2 data-i18n="s10_h2">十、三套推荐配置</h2>
+                <div class="grid">
+                    <div class="config-card">
+                        <h4 data-i18n="s10_c1_h4">1. 清爽日常型</h4>
+                        <p data-i18n="s10_c1_p1">场景：清澈蓝海<br>活跃度：中活跃<br>鱼槽：默认数量</p>
+                        <p data-i18n="s10_c1_p2">适合日常办公、长时间观看。</p>
+                    </div>
+                    <div class="config-card">
+                        <h4><span data-i18n="s10_c2_h4">2. 氛围感拉满型</span></h4>
+                        <p data-i18n="s10_c2_p1">场景：梦幻荧光<br>活跃度：高活跃<br>鱼槽：开启更多鱼位</p>
+                        <p data-i18n="s10_c2_p2">适合喜欢热闹、动态感强的用户。</p>
+                    </div>
+                    <div class="config-card">
+                        <h4 data-i18n="s10_c3_h4">3. 安静省电型</h4>
+                        <p data-i18n="s10_c3_p1">场景：清澈蓝海<br>活跃度：低活跃<br>鱼槽：适当减少</p>
+                        <p data-i18n="s10_c3_p2">追求极致省电与安静体验。</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="heroCard">
+                <h2 data-i18n="s11_h2">十一、常见问题</h2>
+                <h3 data-i18n="s11_h3_1">1. 为什么我改了配置，桌面看起来没变？</h3>
+                <p data-i18n="s11_p1">请确认是否已经点击“保存”并“应用到桌面”。</p>
+                <h3 data-i18n="s11_h3_2">2. 为什么画面感觉更耗电了？</h3>
+                <p data-i18n="s11_p2">活跃度过高、鱼食太多或开启了更多特效都会增加功耗。</p>
+            </section>
+
+            <section class="heroCard">
+                <h2 data-i18n="s12_h2">十二、给新手的一句建议</h2>
+                <div class="tip" style="text-align: center; border-style: dashed;">
+                    <p style="font-size: 18px; color: #fff;"><strong data-i18n="s12_final_tip">先选场景，再看鱼群，再微调鱼食，最后再碰高级参数。</strong></p>
+                </div>
+            </section>
+        </main>
+
+        <div class="footer">
+            © <span id="year"></span> <span data-i18n="footer_rights">Spirit Fish Compass. All rights reserved.</span>
+        </div>
+    </div>
+    <script>
+        (function() {
+            var yearEl = document.getElementById("year");
+            if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+            var I18N = {
+                "zh-CN": {
+                    back_home: "← 返回首页",
+                    guide_title: "灵鱼壁纸成长秘籍",
+                    guide_quote: "这是一份面向用户的「灵鱼壁纸玩法配置说明」，用于帮助用户快速理解灵鱼壁纸可以怎么玩、怎么配、怎么生效。",
+                    s1_h2: "一、灵鱼壁纸是什么",
+                    s1_p1: "灵鱼壁纸不是一张固定不变的壁纸，而是一个可以自己搭配风格的动态鱼缸桌面。",
+                    s1_p2: "你可以把它理解成一个“可配置的灵动鱼缸”：",
+                    s1_li1: "先选一个喜欢的场景氛围",
+                    s1_li2: "再调整灵鱼数量和活跃程度",
+                    s1_li3: "还能替换不同鱼种、投喂鱼食、调整高级参数",
+                    s1_li4: "最后把喜欢的组合保存并应用到桌面",
+                    s1_p3: "也就是说，灵鱼壁纸的核心玩法不是“看一张图”，而是“搭一套属于自己的水族箱风格”。",
+                    s2_h2: "二、灵鱼壁纸可以配置什么",
+                    t_h1: "配置项", t_h2: "作用", t_h3: "适合什么时候调",
+                    tr1_td1: "场景", tr1_td2: "决定整体氛围和背景风格", tr1_td3: "想换感觉时优先调",
+                    tr2_td1: "鱼群活跃度", tr2_td2: "决定鱼游动的快慢和灵动感", tr2_td3: "想要更安静或更热闹时调",
+                    tr3_td1: "鱼槽", tr3_td2: "决定每个鱼位是否启用、用哪种鱼", tr3_td3: "想换鱼、减鱼、补鱼时调",
+                    tr4_td1: "鱼食", tr4_td2: "决定鱼食数量和存在时间", tr4_td3: "想让画面更有互动感时调",
+                    tr5_td1: "时间显示", tr5_td2: "控制桌面是否显示时间", tr5_td3: "想要更实用或更清爽时调",
+                    tr6_td1: "水波效果", tr6_td2: "控制水面波纹表现", tr6_td3: "想让画面更自然时调",
+                    tr7_td1: "高级参数", tr7_td2: "影响鱼的转向、停顿、群体密度等细节", tr7_td3: "想做更细腻的个性化时调",
+                    s3_h2: "三、场景怎么选",
+                    s3_p1: "当前灵鱼壁纸提供三种典型场景，每一种都有不同的观感：",
+                    s3_h3_1: "1. 清澈蓝海",
+                    s3_li1_1: "画面更冷静、通透", s3_li1_2: "适合长时间观看", s3_li1_3: "适合喜欢简洁、清爽风格的用户",
+                    s3_h3_2: "2. 暮色海湾",
+                    s3_li2_1: "带一点晚霞暖色", s3_li2_2: "整体更柔和", s3_li2_3: "适合想要温柔氛围的人",
+                    s3_h3_3: "3. 梦幻荧光",
+                    s3_li3_1: "偏霓虹和荧光感", s3_li3_2: "夜色气氛更强", s3_li3_3: "适合喜欢更有视觉冲击力的用户",
+                    tip_title: "建议：",
+                    s3_tip1: "白天、办公场景：优先选「清澈蓝海」",
+                    s3_tip2: "想要温柔一点：选「暮色海湾」",
+                    s3_tip3: "想要更炫、更灵动：选「梦幻荧光」",
+                    s4_h2: "四、灵鱼数量和鱼槽是什么",
+                    s4_p1: "灵鱼壁纸里不是简单地“放几条鱼”，而是通过鱼槽来管理鱼的组合。",
+                    s4_h3_1: "什么是鱼槽",
+                    s4_p2: "鱼槽可以理解为“鱼的位置”。每个鱼槽都可以开启或关闭、指定一种鱼种。",
+                    s4_h3_2: "为什么要用鱼槽",
+                    s4_li1: "便于控制鱼的数量", s4_li2: "便于快速替换鱼种", s4_li3: "便于保存一套稳定的配置",
+                    s4_tip1: "想要轻松自然：少量鱼槽即可",
+                    s4_tip2: "想要热闹丰富：可以开启更多鱼槽",
+                    s5_h2: "五、鱼食玩法是什么",
+                    s5_p1: "鱼食是灵鱼壁纸里很重要的“互动感来源”。它主要影响：",
+                    s5_li1: "鱼食数量：画面里同时出现多少鱼食",
+                    s5_li2: "鱼食存活时间：鱼食能在画面中停留多久",
+                    s5_tip_p: "想要更耐看：保持默认鱼食参数；想要更有趣：适度增加鱼食存在感；想要更省电、更安静：减少鱼食数量和存活时间。",
+                    s6_h2: "六、鱼群活跃度怎么理解",
+                    s6_p1: "决定灵鱼整体是“安静游动”还是“积极追食”。",
+                    s6_li1: "低活跃：游动更平缓，更省电，适合长时间观看。",
+                    s6_li2: "中活跃：速度和观感更均衡，推荐默认模式。",
+                    s6_li3: "高活跃：追食更积极，画面更有生命力和动态感。",
+                    s7_h2: "七、时间显示和水波效果",
+                    s7_p1: "时间显示：让壁纸兼具美观与实用，适合喜欢“好看+实用”的用户。",
+                    s7_p2: "水波效果：增加画面流动感和真实感，适合追求沉浸体验的用户。",
+                    s8_h2: "八、高级参数是做什么的",
+                    s8_p1: "高级参数更像“微调旋钮”，影响鱼转向的柔和度、停顿概率、聚集程度等。新手建议先从基础设置开始体验，找到喜欢的风格后再进行微调。",
+                    s9_h2: "九、正确的使用流程",
+                    s9_li1: "先看详情页预览：确认当前壁纸样式。",
+                    s9_li2: "再进入设置页调整：修改场景、鱼槽、活跃度等。",
+                    s9_li3: "保存配置：保存后内容才会正式锁定。",
+                    s9_li4: "应用到桌面：应用后桌面才会同步更新。",
+                    s10_h2: "十、三套推荐配置",
+                    s10_c1_h4: "1. 清爽日常型",
+                    s10_c1_p1: "场景：清澈蓝海 | 活跃度：中活跃 | 鱼槽：默认数量",
+                    s10_c1_p2: "适合日常办公、长时间观看。",
+                    s10_c2_h4: "2. 氛围感拉满型",
+                    s10_c2_p1: "场景：梦幻荧光 | 活跃度：高活跃 | 鱼槽：开启更多鱼位",
+                    s10_c2_p2: "适合喜欢热闹、动态感强的用户。",
+                    s10_c3_h4: "3. 安静省电型",
+                    s10_c3_p1: "场景：清澈蓝海 | 活跃度：低活跃 | 鱼槽：适当减少",
+                    s10_c3_p2: "追求极致省电与安静体验。",
+                    s11_h2: "十一、常见问题",
+                    s11_h3_1: "1. 为什么我改了配置，桌面看起来没变？",
+                    s11_p1: "请确认是否已经点击“保存”并“应用到桌面”。",
+                    s11_h3_2: "2. 为什么画面感觉更耗电了？",
+                    s11_p2: "活跃度过高、鱼食太多或开启了更多特效都会增加功耗。",
+                    s12_h2: "十二、给新手的一句建议",
+                    s12_final_tip: "先选场景，再看鱼群，再微调鱼食，最后再碰高级参数。",
+                    footer_rights: "灵鱼罗盘. All rights reserved."
+                },
+                "en": {
+                    back_home: "← Back Home",
+                    guide_title: "Spirit Fish Guide",
+                    guide_quote: "This is a user manual for Spirit Fish Wallpaper, helping you understand how to play, configure, and apply your own dynamic aquarium.",
+                    s1_h2: "I. What is Spirit Fish Wallpaper?",
+                    s1_p1: "It's not just a static image, but a dynamic aquarium desktop that you can customize.",
+                    s1_p2: "Think of it as a 'Configurable Smart Aquarium':",
+                    s1_li1: "Pick your favorite atmosphere",
+                    s1_li2: "Adjust fish quantity and activity",
+                    s1_li3: "Swap species, feed them, and tune advanced parameters",
+                    li4: "Save and apply your favorite combo to the desktop",
+                    s1_p3: "The core gameplay is 'building your own aquarium style' rather than just 'viewing an image'.",
+                    s2_h2: "II. What Can You Configure?",
+                    t_h1: "Option", t_h2: "Effect", t_h3: "When to Adjust",
+                    tr1_td1: "Scene", tr1_td2: "Overall atmosphere and background", tr1_td3: "Priority when changing vibes",
+                    tr2_td1: "Activity", tr2_td2: "Swimming speed and liveliness", tr2_td3: "When you want quiet or bustle",
+                    tr3_td1: "Slots", tr3_td2: "Toggle fish positions and species", tr3_td3: "When swapping or adding fish",
+                    tr4_td1: "Food", tr4_td2: "Quantity and lifetime of fish food", tr4_td3: "For more interaction",
+                    tr5_td1: "Time", tr5_td2: "Toggle clock display", tr5_td3: "For utility or clean look",
+                    tr6_td1: "Ripple", tr6_td2: "Water surface ripple effect", tr6_td3: "For a more natural look",
+                    tr7_td1: "Advanced", tr7_td2: "Softness, pause probability, density", tr7_td3: "For fine-tuned personalization",
+                    s3_h2: "III. Choosing a Scene",
+                    s3_p1: "Spirit Fish offers three typical scenes, each with a unique look:",
+                    s3_h3_1: "1. Clear Ocean",
+                    s3_li1_1: "Cool and transparent", s3_li1_2: "Great for long viewing", s3_li1_3: "Ideal for fans of clean styles",
+                    s3_h3_2: "2. Twilight Bay",
+                    s3_li2_1: "Warm sunset colors", s3_li2_2: "Softer overall look", s3_li2_3: "Ideal for a gentle atmosphere",
+                    s3_h3_3: "3. Dreamy Neon",
+                    s3_li3_1: "Neon and fluorescent vibes", s3_li3_2: "Strong night atmosphere", s3_li3_3: "Ideal for strong visual impact",
+                    tip_title: "Tips:",
+                    s3_tip1: "Daytime/Office: Choose 'Clear Ocean'",
+                    s3_tip2: "Gentle mood: Choose 'Twilight Bay'",
+                    s3_tip3: "Dynamic/Cool: Choose 'Dreamy Neon'",
+                    s4_h2: "IV. Quantity & Slots",
+                    s4_p1: "We manage fish combinations through 'Slots' rather than just a simple count.",
+                    s4_h3_1: "What are Slots?",
+                    s4_p2: "Think of slots as 'Fish Positions'. Each can be toggled and assigned a species.",
+                    s4_h3_2: "Why use Slots?",
+                    s4_li1: "Easy count control", s4_li2: "Quick species swapping", s4_li3: "Save stable configurations",
+                    s4_tip1: "Natural/Clean: Fewer slots",
+                    s4_tip2: "Lively/Rich: Enable more slots",
+                    s5_h2: "V. Fish Food Interaction",
+                    s5_p1: "Food is the key source of 'Interaction' in Spirit Fish. It affects:",
+                    s5_li1: "Food Count: How many items appear at once",
+                    s5_li2: "Lifetime: How long food stays in view",
+                    s5_tip_p: "For clean look: keep defaults. For fun: increase food presence. For battery saving: reduce food count and lifetime.",
+                    s6_h2: "VI. Understanding Activity",
+                    s6_p1: "Determines if fish are 'Swimming Quietly' or 'Actively Chasing Food'.",
+                    s6_li1: "Low: Calm movement, saves battery, great for focus.",
+                    s6_li2: "Medium: Balanced speed and look (Recommended).",
+                    s6_li3: "High: Active chasing, more vibrant and dynamic.",
+                    s7_h2: "VII. Clock & Ripple",
+                    s7_p1: "Clock Display: Blends beauty with utility for daily use.",
+                    s7_p2: "Ripple Effect: Enhances immersion with realistic water motion.",
+                    s8_h2: "VIII. What are Advanced Parameters?",
+                    s8_p1: "Think of them as 'Fine-tuning Knobs' for turn smoothness, pause probability, and group density. Beginners should start with presets first.",
+                    s9_h2: "IX. The Right Workflow",
+                    s9_li1: "Preview: Check the current style in the detail page.",
+                    s9_li2: "Configure: Modify scene, slots, and activity.",
+                    s9_li3: "Save: Lock in your changes.",
+                    s9_li4: "Apply: Sync and update your desktop wallpaper.",
+                    s10_h2: "X. Recommended Setups",
+                    s10_c1_h4: "1. Fresh Daily",
+                    s10_c1_p1: "Scene: Clear Ocean | Activity: Medium | Slots: Default",
+                    s10_c1_p2: "Perfect for office and long-term use.",
+                    s10_c2_h4: "2. Maximum Vibes",
+                    s10_c2_p1: "Scene: Dreamy Neon | Activity: High | Slots: More enabled",
+                    s10_c2_p2: "Perfect for users who love dynamic visuals.",
+                    s10_c3_h4: "3. Quiet & Efficient",
+                    s10_c3_p1: "Scene: Clear Ocean | Activity: Low | Slots: Fewer enabled",
+                    s10_c3_p2: "Pursue ultimate battery saving and calm experience.",
+                    s11_h2: "XI. FAQ",
+                    s11_h3_1: "1. Why didn't my desktop change after I edited?",
+                    s11_p1: "Please ensure you've clicked both 'Save' and 'Apply to Desktop'.",
+                    s11_h3_2: "2. Why is it using more battery?",
+                    s11_p2: "High activity, too much food, or extra effects can increase power usage.",
+                    s12_h2: "XII. Advice for Beginners",
+                    s12_final_tip: "Pick a scene first, then fish count, then food, and finally touch advanced params.",
+                    footer_rights: "Spirit Fish Compass. All rights reserved."
+                }
+            };
+
+            function pickLang() {
+                var sp = new URLSearchParams(window.location.search);
+                var q = sp.get("lang");
+                if (q && (q === "en" || q === "zh-CN")) return q;
+                var saved = localStorage.getItem("lang");
+                if (saved && (saved === "en" || saved === "zh-CN")) return saved;
+                return "en";
+            }
+
+            function applyLang(lang) {
+                document.documentElement.lang = lang;
+                localStorage.setItem("lang", lang);
+
+                try {
+                    var url = new URL(window.location.href);
+                    url.searchParams.set("lang", lang);
+                    window.history.replaceState({}, "", url.toString());
+                } catch (e) {}
+
+                var zhBtn = document.getElementById("langZh");
+                var enBtn = document.getElementById("langEn");
+                if (zhBtn) zhBtn.setAttribute("aria-pressed", lang === "zh-CN" ? "true" : "false");
+                if (enBtn) enBtn.setAttribute("aria-pressed", lang === "en" ? "true" : "false");
+
+                var dict = I18N[lang] || I18N["zh-CN"];
+                var nodes = document.querySelectorAll("[data-i18n]");
+                for (var i = 0; i < nodes.length; i++) {
+                    var k = nodes[i].getAttribute("data-i18n");
+                    if (k && dict[k] != null) nodes[i].textContent = String(dict[k]);
+                }
+            }
+
+            var currentLang = pickLang();
+            applyLang(currentLang);
+
+            document.getElementById("langZh").addEventListener("click", function() { applyLang("zh-CN"); });
+            document.getElementById("langEn").addEventListener("click", function() { applyLang("en"); });
+        })();
+    </script>
+</body>
+</html>
